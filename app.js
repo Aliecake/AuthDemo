@@ -5,7 +5,8 @@ const express = require('express'),
     session = require('express-session'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
-    passportLocalMongoose = require('passport-local-mongoose');
+    passportLocalMongoose = require('passport-local-mongoose'),
+    User = require('./models/user');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
