@@ -55,8 +55,13 @@ app.post('/register', (req, res) => {
     });
 });
 
+//====LOGIN===//
 app.get('/login', (req, res) => {
     res.render('login');
+});
+
+app.post('/login', (req, res) => {
+
 });
 
 app.get('/logout', (req, res) => {
