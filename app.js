@@ -43,17 +43,16 @@ app.get('/register', (req, res) => {
 
 //handle sign up
 app.post('/register', (req, res) => {
-    User.create({
-        username: req.body.username,
-        password: req.body.password
-    }, (err, user) => {
-        if(err) {
-            console.log('Error creating user', err);
+    User.register(new User({username: req.body.username}), req.body.password, (err, user) => {
+        if (err) {
+            console.log(err);
+            res.redirect('/register');
         } else {
-            console.log('user added to DB', user);
+            passport.authenticate('local')(req, res, () => {
+                res.redirect('/secret');
+            });
         }
     });
-    res.redirect('/secret');
 });
 
 app.get('/login', (req, res) => {
