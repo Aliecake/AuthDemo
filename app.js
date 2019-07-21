@@ -60,8 +60,11 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
-app.post('/login', (req, res) => {
-
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/secret',
+    failureRedirect: '/login'
+}), (req, res) => {
+    //callback
 });
 
 app.get('/logout', (req, res) => {
