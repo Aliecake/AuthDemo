@@ -20,17 +20,48 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(User.createStrategy());
 
-app.set('view engine', 'ejs');
-
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+app.set('view engine', 'ejs');
+
+//=========ROUTES==========//
 
 app.get('/', (req, res) => {
     res.render('home');
 });
 
-app.get('/secret', (req, res) =>{
+app.get('/secret', (req, res) => {
     res.render('secret');
+});
+
+//=====AUTH ROUTES=======//
+
+app.get('/register', (req, res) => {
+    res.render('register');
+});
+
+//handle sign up
+app.post('/register', (req, res) => {
+    User.create({
+        username: req.body.username,
+        password: req.body.password
+    }, (err, user) => {
+        if(err) {
+            console.log('Error creating user', err);
+        } else {
+            console.log('user added to DB', user);
+        }
+    });
+    res.redirect('/secret');
+});
+
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+app.get('/logout', (req, res) => {
+    res.render('logout');
 });
 
 app.listen(3000, () => {
