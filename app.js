@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
     res.render('home');
 });
 
-app.get('/secret', (req, res) => {
+app.get('/secret', isLogged, (req, res) => {
     res.render('secret');
 });
 
@@ -68,9 +68,17 @@ app.post('/login', passport.authenticate('local', {
 });
 
 app.get('/logout', (req, res) => {
-    res.render('logout');
+    req.logout();
+    res.redirect('/');
 });
 
+function isLogged(req, res, next) {
+    if(req.isAuthenticated()){
+        return next();
+    } else {
+        res.redirect('/login');
+    }
+}
 app.listen(3000, () => {
     console.log('Listening on port 3000');
 });
